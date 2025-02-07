@@ -1,12 +1,11 @@
-// for using environment variables
-import "dotenv/config";
+import { config } from "./src/config/config.js";
 
 // import the express app instance from app.js
 import app from "./src/app.js";
 
 // function to start the server
 const startServer = () => {
-  const PORT = process.env.PORT || 3000;
+  const PORT = config.port;
 
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
