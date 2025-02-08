@@ -6,6 +6,7 @@ const _config = {
     url: process.env.MONGODB_URI,
     name: "e-book-portal",
   },
+  env: process.env.NODE_ENV || "development",
 };
 
 export const config = Object.freeze(_config);
