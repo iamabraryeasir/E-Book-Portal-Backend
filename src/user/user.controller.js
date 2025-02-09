@@ -34,14 +34,15 @@ const registerUser = async (req, res, next) => {
     });
 
     // token generation
-    const token = jwt.sign({ sub: newUser._id }, config.jwtSecret, {
+    const accessToken = jwt.sign({ sub: newUser._id }, config.jwtSecret, {
       expiresIn: "7d",
+      algorithm: "HS256",
     });
 
     // response
-    res.status(200).json(
-      new ApiResponse(200, "Successfully registered user.", {
-        accessToken: token,
+    return res.status(201).json(
+      new ApiResponse(201, "Successfully registered user.", {
+        accessToken,
       })
     );
   } catch (err) {
@@ -49,4 +50,42 @@ const registerUser = async (req, res, next) => {
   }
 };
 
-export { registerUser };
+const loginUser = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+
+    // validating the empty inputs
+    if (!email?.trim() || !password?.trim()) {
+      return next(ApiResponse.error(400, "All fields are required."));
+    }
+
+    // finding the user in database
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return next(ApiResponse.error(400, "Incorrect username or password."));
+    }
+
+    // verify password
+    const isPasswordMatched = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordMatched) {
+      return next(ApiResponse.error(400, "Incorrect username or password."));
+    }
+
+    // creating new access token
+    const accessToken = jwt.sign({ sub: user._id }, config.jwtSecret, {
+      expiresIn: "7d",
+      algorithm: "HS256",
+    });
+
+    // sending the response
+    return res
+      .status(200)
+      .json(new ApiResponse(200, "Successfully login user.", { accessToken }));
+  } catch (err) {
+    return next(ApiResponse.error(500, err.message));
+  }
+};
+
+export { registerUser, loginUser };
