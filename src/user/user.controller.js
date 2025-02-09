@@ -1,6 +1,8 @@
 import { User } from "./user.model.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import { ApiResponse } from "../utils/ApiResponse.js";
+import { config } from "../config/config.js";
 
 const registerUser = async (req, res, next) => {
   // getting the data
@@ -25,15 +27,16 @@ const registerUser = async (req, res, next) => {
   const newUser = await User.create({ name, email, password: hashedPassword });
 
   // token generation
+  const token = jwt.sign({ sub: newUser._id }, config.jwtSecret, {
+    expiresIn: "7d",
+  });
 
   // response
-  res.status(200).json({
-    success: true,
-    message: "Successfully Registered The User!!",
-    data: {
-      _id: newUser._id,
-    },
-  });
+  res.status(200).json(
+    new ApiResponse(200, "Successfully registered user.", {
+      accessToken: token,
+    })
+  );
 };
 
 export { registerUser };

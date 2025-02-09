@@ -7,6 +7,7 @@ const _config = {
     name: "e-book-portal",
   },
   env: process.env.NODE_ENV || "development",
+  jwtSecret: process.env.JWT_SECRET,
 };
 
 export const config = Object.freeze(_config);
