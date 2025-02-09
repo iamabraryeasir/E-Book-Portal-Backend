@@ -10,7 +10,11 @@ cloudinary.config({
 });
 
 // Upload an image
-const uploadOnCloudinary = async (localFilePath, folderName) => {
+const uploadOnCloudinary = async (
+  localFilePath,
+  folderName,
+  recourseType = "auto"
+) => {
   // if there is no local file path
   if (!localFilePath) {
     return null;
@@ -19,7 +23,7 @@ const uploadOnCloudinary = async (localFilePath, folderName) => {
   // main uploading
   const uploadResponse = await cloudinary.uploader
     .upload(localFilePath, {
-      resource_type: "auto",
+      resource_type: recourseType,
       folder: folderName,
     })
     .catch(() => {

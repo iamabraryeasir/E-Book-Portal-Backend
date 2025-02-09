@@ -25,7 +25,8 @@ const addNewBook = async (req, res, next) => {
 
   const bookFileUploadResult = await uploadOnCloudinary(
     req.files.bookFile[0].path,
-    config.cloudinary.bookFileFolderName
+    config.cloudinary.bookFileFolderName,
+    "raw"
   );
 
   // saving the data to database
