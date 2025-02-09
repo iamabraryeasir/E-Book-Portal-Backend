@@ -4,6 +4,10 @@ import { userRouter } from "./user/user.router.js";
 
 const app = express();
 
+// global middlewares
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 // all app routes
 app.get("/", (req, res) => {
   res.json({ message: "Hello, world!" });
