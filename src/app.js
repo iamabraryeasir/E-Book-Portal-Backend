@@ -10,10 +10,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // all app routes
-app.get("/", (req, res) => {
-  res.json({ message: "Hello, world!" });
-});
-
 app.use("/api/users", userRouter);
 app.use("/api/books", bookRouter);
 
