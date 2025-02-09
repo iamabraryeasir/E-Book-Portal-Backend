@@ -43,8 +43,4 @@ const addNewBook = async (req, res, next) => {
     .json(new ApiResponse(201, "New book added successfully.", book));
 };
 
-const getAllBooks = async (req, res, _next) => {
-  res.send("list of all books");
-};
-
-export { addNewBook, getAllBooks };
+export { addNewBook };
