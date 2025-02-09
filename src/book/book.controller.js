@@ -3,6 +3,8 @@ const getAllBooks = async (req, res, _next) => {
 };
 
 const addNewBook = async (req, res, _next) => {
+  console.log("Files", req.files);
+
   res.send("For adding new");
 };
 

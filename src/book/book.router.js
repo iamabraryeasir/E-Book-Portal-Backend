@@ -9,7 +9,7 @@ bookRouter.post(
   "/add-book",
   upload.fields([
     {
-      name: "bookCover",
+      name: "bookCoverImage",
       maxCount: 1,
     },
     {
