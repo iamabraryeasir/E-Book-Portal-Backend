@@ -4,7 +4,7 @@ import { config } from "../config/config.js";
 import { Book } from "./book.model.js";
 
 const addNewBook = async (req, res, next) => {
-  const { title, author, category } = req.body;
+  const { title, category } = req.body;
 
   // validating
   if (!title?.trim() || !category?.trim()) {
@@ -29,14 +29,28 @@ const addNewBook = async (req, res, next) => {
     "raw"
   );
 
-  // saving the data to database
-  const book = await Book.create({
-    title,
-    author,
-    category,
-    bookCoverImage: bookCoverUploadResult.url,
-    bookFile: bookFileUploadResult.url,
-  });
+  let book;
+  try {
+    // saving the data to database
+    book = await Book.create({
+      title,
+      author: req.userId,
+      category,
+      bookCoverImage: bookCoverUploadResult.url,
+      bookFile: bookFileUploadResult.url,
+    });
+  } catch (err) {
+    if (err.code === 11000) {
+      return next(
+        ApiResponse.error(
+          400,
+          "The book name is already taken. Try another one."
+        )
+      );
+    } else {
+      return next(ApiResponse.error(400, err.message));
+    }
+  }
 
   // sending response
   return res

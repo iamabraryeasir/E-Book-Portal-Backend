@@ -1,4 +1,5 @@
 import express from "express";
+import cookieParser from "cookie-parser";
 import { globalErrorHandler } from "./middlewares/globalErrorHandler.js";
 import { userRouter } from "./user/user.router.js";
 import { bookRouter } from "./book/book.router.js";
@@ -8,6 +9,7 @@ const app = express();
 // global middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // all app routes
 app.use("/api/users", userRouter);

@@ -39,12 +39,21 @@ const registerUser = async (req, res, next) => {
       algorithm: "HS256",
     });
 
+    // making the cookie secure
+    const cookieOptions = {
+      httpOnly: true,
+      secure: true,
+    };
+
     // response
-    return res.status(201).json(
-      new ApiResponse(201, "Successfully registered user.", {
-        accessToken,
-      })
-    );
+    return res
+      .cookie("accessToken", accessToken, cookieOptions)
+      .status(201)
+      .json(
+        new ApiResponse(201, "Successfully registered user.", {
+          accessToken,
+        })
+      );
   } catch (err) {
     return next(ApiResponse.error(500, err.message));
   }
@@ -79,8 +88,15 @@ const loginUser = async (req, res, next) => {
       algorithm: "HS256",
     });
 
+    // making the cookie secure
+    const cookieOptions = {
+      httpOnly: true,
+      secure: true,
+    };
+
     // sending the response
     return res
+      .cookie("accessToken", accessToken, cookieOptions)
       .status(200)
       .json(new ApiResponse(200, "Successfully login user.", { accessToken }));
   } catch (err) {
