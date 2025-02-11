@@ -13,7 +13,7 @@ cloudinary.config({
 const uploadOnCloudinary = async (
   localFilePath,
   folderName,
-  recourseType = "auto"
+  resourceType = "auto"
 ) => {
   // if there is no local file path
   if (!localFilePath) {
@@ -23,7 +23,7 @@ const uploadOnCloudinary = async (
   // main uploading
   const uploadResponse = await cloudinary.uploader
     .upload(localFilePath, {
-      resource_type: recourseType,
+      resource_type: resourceType,
       folder: folderName,
     })
     .catch(() => {
@@ -35,9 +35,22 @@ const uploadOnCloudinary = async (
   return uploadResponse;
 };
 
-const deleteImageFromCloudinary = async (imageUrl) => {
-  const publicId = imageUrl.split("/").pop().split(".")[0];
-  await cloudinary.uploader.destroy(publicId);
+const deleteImageFromCloudinary = async (imageUrl, withExtension = false) => {
+  let publicId = "";
+
+  if (withExtension) {
+    // for raw pdf's
+    publicId = imageUrl.split("/").slice(-2).join("/");
+  } else {
+    // for images
+    publicId = imageUrl.split("/").slice(-2).join("/").split(".").at(0);
+  }
+
+  const options = {
+    resource_type: withExtension ? "raw" : "image",
+  };
+
+  await cloudinary.uploader.destroy(publicId, options);
 };
 
 export { uploadOnCloudinary, deleteImageFromCloudinary };
