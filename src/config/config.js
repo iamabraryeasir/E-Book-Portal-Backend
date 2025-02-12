@@ -4,6 +4,10 @@ const _config = {
   env: process.env.NODE_ENV || "development",
   port: process.env.PORT || 3000,
 
+  cors: {
+    origin: process.env.CORS_ORIGIN,
+  },
+
   db: {
     url: process.env.MONGODB_URI,
     name: "e-book-portal",
