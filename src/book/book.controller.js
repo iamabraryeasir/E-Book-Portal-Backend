@@ -6,6 +6,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { config } from "../config/config.js";
 import { Book } from "./book.model.js";
 
+// create
 const addNewBook = async (req, res, next) => {
   const { title, category } = req.body;
 
@@ -73,6 +74,39 @@ const addNewBook = async (req, res, next) => {
     .json(new ApiResponse(201, "New book added successfully.", book));
 };
 
+// read
+const getBookList = async (req, res, next) => {
+  // add pagination
+  try {
+    const books = await Book.find().limit(10);
+
+    return res
+      .status(200)
+      .json(new ApiResponse(200, "Successfully fetched the book list.", books));
+  } catch (err) {
+    return next(ApiResponse.error(400, err.message));
+  }
+};
+
+const getSingleBook = async (req, res, next) => {
+  const bookId = req.params.bookId;
+
+  try {
+    const book = await Book.findOne({ _id: bookId });
+
+    if (!book) {
+      return next(ApiResponse.error(404, "No book found with this ID."));
+    }
+
+    return res
+      .status(200)
+      .json(new ApiResponse(200, "Successfully fetched the book.", book));
+  } catch (err) {
+    return next(ApiResponse.error(500, err.message));
+  }
+};
+
+// update
 const updateBook = async (req, res, next) => {
   const { title, category } = req.body;
   const bookId = req.params.bookId;
@@ -148,17 +182,4 @@ const updateBook = async (req, res, next) => {
     .json(new ApiResponse(201, "Book updated successfully", updatedBook));
 };
 
-const getBookList = async (req, res, next) => {
-  // add pagination
-  try {
-    const books = await Book.find().limit(10);
-
-    return res
-      .status(200)
-      .json(new ApiResponse(200, "Successfully fetched the book list.", books));
-  } catch (err) {
-    return next(ApiResponse.error(400, err.message));
-  }
-};
-
-export { addNewBook, updateBook, getBookList };
+export { addNewBook, updateBook, getBookList, getSingleBook };

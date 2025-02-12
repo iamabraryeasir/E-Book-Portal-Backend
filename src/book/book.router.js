@@ -1,7 +1,12 @@
 import { Router } from "express";
 import { upload } from "../utils/multer.js";
 import { authenticate } from "../middlewares/auth.middleware.js";
-import { addNewBook, updateBook, getBookList } from "./book.controller.js";
+import {
+  addNewBook,
+  updateBook,
+  getBookList,
+  getSingleBook,
+} from "./book.controller.js";
 
 const bookRouter = Router();
 
@@ -27,7 +32,11 @@ bookRouter.patch(
   updateBook
 );
 
+// todo: add pagination
 // get book list
 bookRouter.get("/", getBookList);
+
+// get single book
+bookRouter.get("/:bookId", getSingleBook);
 
 export { bookRouter };
