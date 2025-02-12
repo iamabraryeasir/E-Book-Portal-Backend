@@ -148,4 +148,17 @@ const updateBook = async (req, res, next) => {
     .json(new ApiResponse(201, "Book updated successfully", updatedBook));
 };
 
-export { addNewBook, updateBook };
+const getBookList = async (req, res, next) => {
+  // add pagination
+  try {
+    const books = await Book.find().limit(10);
+
+    return res
+      .status(200)
+      .json(new ApiResponse(200, "Successfully fetched the book list.", books));
+  } catch (err) {
+    return next(ApiResponse.error(400, err.message));
+  }
+};
+
+export { addNewBook, updateBook, getBookList };

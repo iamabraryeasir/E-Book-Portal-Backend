@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { upload } from "../utils/multer.js";
 import { authenticate } from "../middlewares/auth.middleware.js";
-import { addNewBook, updateBook } from "./book.controller.js";
+import { addNewBook, updateBook, getBookList } from "./book.controller.js";
 
 const bookRouter = Router();
 
@@ -26,5 +26,8 @@ bookRouter.patch(
   ]),
   updateBook
 );
+
+// get book list
+bookRouter.get("/", getBookList);
 
 export { bookRouter };
