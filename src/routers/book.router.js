@@ -7,7 +7,7 @@ import {
   getBookList,
   getSingleBook,
   deleteBook,
-} from "./book.controller.js";
+} from "../controllers/book.controller.js";
 
 const bookRouter = Router();
 

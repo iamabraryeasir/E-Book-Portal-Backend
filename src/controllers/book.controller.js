@@ -4,7 +4,7 @@ import {
 } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { config } from "../config/config.js";
-import { Book } from "./book.model.js";
+import { Book } from "../models/book.model.js";
 
 // create
 const addNewBook = async (req, res, next) => {

@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { config } from "../config/config.js";
-import { User } from "../user/user.model.js";
+import { User } from "../models/user.model.js";
 
 const authenticate = async (req, res, next) => {
   try {
