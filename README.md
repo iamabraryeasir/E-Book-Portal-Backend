@@ -14,8 +14,8 @@ This is the backend API for the E-Book Portal project, providing endpoints for m
 1. Clone this repository
 
 ```bash
-git clone https://github.com/yourusername/ebook-portal-backend.git
-cd ebook-portal-backend
+git clone https://github.com/iamabraryeasir/E-Book-Portal-Backend.git
+cd E-Book-Portal-Backend
 ```
 
 2. Install dependencies
@@ -95,6 +95,12 @@ npm test # Runs tests
 3. Commit your changes
 4. Push to the branch
 5. Create a Pull Request
+
+## Developer
+
+- **Name:** Abrar Yeasir
+- **GitHub:** [iamabraryeasir](https://github.com/iamabraryeasir)
+- **Email:** [iamabraryeasir@gmail.com](mailto:iamabraryeasir@gmail.com)
 
 ## License
 
