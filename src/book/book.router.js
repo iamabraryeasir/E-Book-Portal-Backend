@@ -6,6 +6,7 @@ import {
   updateBook,
   getBookList,
   getSingleBook,
+  deleteBook,
 } from "./book.controller.js";
 
 const bookRouter = Router();
@@ -38,5 +39,8 @@ bookRouter.get("/", getBookList);
 
 // get single book
 bookRouter.get("/:bookId", getSingleBook);
+
+// delete book
+bookRouter.delete("/:bookId", authenticate, deleteBook);
 
 export { bookRouter };

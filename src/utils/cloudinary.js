@@ -35,7 +35,7 @@ const uploadOnCloudinary = async (
   return uploadResponse;
 };
 
-const deleteImageFromCloudinary = async (imageUrl, withExtension = false) => {
+const deleteFileFromCloudinary = async (imageUrl, withExtension = false) => {
   let publicId = "";
 
   if (withExtension) {
@@ -50,7 +50,7 @@ const deleteImageFromCloudinary = async (imageUrl, withExtension = false) => {
     resource_type: withExtension ? "raw" : "image",
   };
 
-  await cloudinary.uploader.destroy(publicId, options);
+  return await cloudinary.uploader.destroy(publicId, options);
 };
 
-export { uploadOnCloudinary, deleteImageFromCloudinary };
+export { uploadOnCloudinary, deleteFileFromCloudinary };

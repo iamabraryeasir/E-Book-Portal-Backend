@@ -1,6 +1,6 @@
 import {
   uploadOnCloudinary,
-  deleteImageFromCloudinary,
+  deleteFileFromCloudinary,
 } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { config } from "../config/config.js";
@@ -130,7 +130,7 @@ const updateBook = async (req, res, next) => {
         config.cloudinary.bookCoverFolderName
       );
 
-      await deleteImageFromCloudinary(book.bookCoverImage, false);
+      await deleteFileFromCloudinary(book.bookCoverImage, false);
     } catch (err) {
       return next(
         ApiResponse.error(
@@ -151,7 +151,7 @@ const updateBook = async (req, res, next) => {
         "raw"
       );
 
-      await deleteImageFromCloudinary(book.bookFile, true);
+      await deleteFileFromCloudinary(book.bookFile, true);
     } catch (err) {
       return next(
         ApiResponse.error(
@@ -182,4 +182,43 @@ const updateBook = async (req, res, next) => {
     .json(new ApiResponse(201, "Book updated successfully", updatedBook));
 };
 
-export { addNewBook, updateBook, getBookList, getSingleBook };
+// delete
+const deleteBook = async (req, res, next) => {
+  const bookId = req.params.bookId;
+
+  try {
+    const book = await Book.findOne({ _id: bookId });
+
+    if (!book) {
+      return next(ApiResponse.error(404, "No book found with this ID."));
+    }
+
+    if (book.author.toString() !== req.userId) {
+      return next(
+        ApiResponse.error(403, "User not allowed to delete this book.")
+      );
+    }
+
+    const deletedBook = await Book.findOneAndDelete({ _id: bookId });
+
+    try {
+      await deleteFileFromCloudinary(deletedBook.bookCoverImage, false);
+      await deleteFileFromCloudinary(deletedBook.bookFile, true);
+    } catch (err) {
+      return next(
+        ApiResponse.error(
+          500,
+          `An error occur while deleting images. \n${err.message}`
+        )
+      );
+    }
+
+    return res
+      .status(200)
+      .json(new ApiResponse(200, "Book deleted successfully.", deletedBook));
+  } catch (err) {
+    return next(ApiResponse.error(500, err.message));
+  }
+};
+
+export { addNewBook, updateBook, getBookList, getSingleBook, deleteBook };
