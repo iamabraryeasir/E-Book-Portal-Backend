@@ -1,8 +1,8 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import { globalErrorHandler } from "./middlewares/globalErrorHandler.js";
-import { userRouter } from "./user/user.router.js";
-import { bookRouter } from "./book/book.router.js";
+import { userRouter } from "./routers/user.router.js";
+import { bookRouter } from "./routers/book.router.js";
 
 const app = express();
 
