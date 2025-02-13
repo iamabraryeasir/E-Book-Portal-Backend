@@ -78,7 +78,7 @@ const addNewBook = async (req, res, next) => {
 const getBookList = async (req, res, next) => {
   // add pagination
   try {
-    const books = await Book.find().limit(10);
+    const books = await Book.find().limit(10).populate("author", "name");
 
     return res
       .status(200)
@@ -92,7 +92,7 @@ const getSingleBook = async (req, res, next) => {
   const bookId = req.params.bookId;
 
   try {
-    const book = await Book.findOne({ _id: bookId });
+    const book = await Book.findOne({ _id: bookId }).populate("author", "name");
 
     if (!book) {
       return next(ApiResponse.error(404, "No book found with this ID."));
