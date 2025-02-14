@@ -8,10 +8,10 @@ import { Book } from "../models/book.model.js";
 
 // create
 const addNewBook = async (req, res, next) => {
-  const { title, category } = req.body;
+  const { title, category, description } = req.body;
 
   // validating
-  if (!title?.trim() || !category?.trim()) {
+  if (!title?.trim() || !category?.trim() || !description?.trim()) {
     return next(ApiResponse.error(400, "All fields are required."));
   }
 
@@ -51,6 +51,7 @@ const addNewBook = async (req, res, next) => {
     book = await Book.create({
       title,
       author: req.userId,
+      description,
       category,
       bookCoverImage: bookCoverUploadResult.url,
       bookFile: bookFileUploadResult.url,
@@ -78,7 +79,7 @@ const addNewBook = async (req, res, next) => {
 const getBookList = async (req, res, next) => {
   // add pagination
   try {
-    const books = await Book.find().limit(10).populate("author", "name");
+    const books = await Book.find().limit(9).populate("author", "name");
 
     return res
       .status(200)
@@ -108,7 +109,7 @@ const getSingleBook = async (req, res, next) => {
 
 // update
 const updateBook = async (req, res, next) => {
-  const { title, category } = req.body;
+  const { title, category, description } = req.body;
   const bookId = req.params.bookId;
 
   const book = await Book.findOne({ _id: bookId });
@@ -168,6 +169,7 @@ const updateBook = async (req, res, next) => {
     {
       title: title ? title : book.title,
       category: category ? category : book.category,
+      description: description ? description : book.description,
       bookCoverImage: bookCoverUploadResult
         ? bookCoverUploadResult.url
         : book.bookCoverImage,
