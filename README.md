@@ -38,6 +38,23 @@ JWT_SECRET=your_jwt_secret
 npm start
 ```
 
+## Postman Collection
+
+A Postman collection is available for testing the API endpoints. You can import it into Postman to get started quickly.
+
+### Importing the Collection
+
+1. Open Postman.
+2. Click on the "Import" button.
+3. Select the file `postman_collection/E-Book Portal Backend.postman_collection.json` from the project's root directory.
+4. Once imported, you will see the collection named "E-Book Portal Backend" in your Postman workspace.
+
+### Using the Collection
+
+- The collection includes requests for all available API endpoints.
+- Make sure to set the `base_url` environment variable in Postman to your API's base URL (e.g., `http://localhost:5000/api`).
+- For endpoints that require authentication, make sure to include the JWT token in the Authorization header as described in the [Authentication](#authentication) section.
+
 ## API Endpoints
 
 ### Authentication

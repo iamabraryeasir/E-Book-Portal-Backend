@@ -1,0 +1,208 @@
+{
+	"info": {
+		"_postman_id": "9c11971b-68cf-497e-af6c-e4423289472f",
+		"name": "E-Book Portal Backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "40701677"
+	},
+	"item": [
+		{
+			"name": "01. Home Route",
+			"item": [
+				{
+					"name": "Home",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{base_url}}/"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "02. User Routes",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\r\n    \"name\": \"Bob Williams\",\r\n    \"email\": \"bobwilliams@email.com\",\r\n    \"password\": \"bobPass987\"\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/users/register"
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"alicejohnson@email.com\",\r\n    \"password\": \"aliceSecure789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/users/login"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "03. Book Routes",
+			"item": [
+				{
+					"name": "Add Book",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2E4NTM4ODRiYmQwNjZiZTE2ZWE0YWIiLCJpYXQiOjE3MzkxOTMzMDMsImV4cCI6MTczOTc5ODEwM30.x0Pae8UZCcTbswvO5TWv4Ob1_XbYAXkPyg4UB8Bg5Fc",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Automate the Boring Stuff with Python",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "Programming",
+									"type": "text"
+								},
+								{
+									"key": "bookCoverImage",
+									"type": "file",
+									"src": "/C:/Users/Abrar Yeasir/Downloads/7c9314517cc7dade041d521847c4188a.jpg"
+								},
+								{
+									"key": "bookFile",
+									"type": "file",
+									"src": "postman-cloud:///1efe6eb2-3ba2-4700-bf69-c54189c13f66"
+								}
+							]
+						},
+						"url": "{{base_url}}/books/"
+					},
+					"response": []
+				},
+				{
+					"name": "All Books",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{base_url}}/books/"
+					},
+					"response": []
+				},
+				{
+					"name": "Single Book",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{base_url}}/books/67ac4935b5d0f0a912513775"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Book",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2E4NTM4ODRiYmQwNjZiZTE2ZWE0YWIiLCJpYXQiOjE3MzkxOTMzMDMsImV4cCI6MTczOTc5ODEwM30.x0Pae8UZCcTbswvO5TWv4Ob1_XbYAXkPyg4UB8Bg5Fc",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Introduction to Node.js ",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "Programming",
+									"type": "text"
+								},
+								{
+									"key": "bookCoverImage",
+									"type": "file",
+									"src": "postman-cloud:///1efe6eb1-20c1-4720-8846-d1afc0a6b586"
+								},
+								{
+									"key": "bookFile",
+									"type": "file",
+									"src": "postman-cloud:///1efe6eb2-3ba2-4700-bf69-c54189c13f66"
+								}
+							]
+						},
+						"url": "{{base_url}}/books/67ab93c2954c40c8ba300dfc"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Book",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{base_url}}/books/67ac4ea1b5d0f0a912513778"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8001/api",
+			"type": "string"
+		}
+	]
+}
